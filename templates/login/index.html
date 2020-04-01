@@ -1,0 +1,53 @@
+{% extends 'login/base.html' %}
+{% block title %}主页{% endblock %}
+{% block content %}
+    {% if request.session.is_login %}
+
+        {% if message %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+
+        <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>
+        <div id="homepage_list" style="float:left;">
+            {% if student.student %}
+                <a href="{% url 'info_edit' student.pk %}" class="btn btn-default pull-left">
+            {% else %}
+            <a href="{% url 'enroll' %}" class="btn btn-default pull-left">
+            {% endif %}
+                <p>自主招生报名</p>
+                <p>Independent Enrollment</p>
+            </a>
+            {% if student and student.student.certification.seatNo != '' %}
+            <a href="{% url 'print' %}" class="btn btn-default pull-left">
+                <p>准考证打印</p>
+                <p>Print</p>
+            </a>
+            {% else %}
+            <a href="#" class="btn btn-default pull-left">
+                <p>注意</p>
+                <p>请于3月20日后登录系统打印准考证</p>
+            </a>
+            {% endif %}
+            <!--
+            <a href="/homepage/cet_4/" class="btn btn-default pull-left">
+                <p>英语四级报名</p>
+                <p>Enrollment for CET-4</p>
+            </a>
+            <a href="/homepage/cet_6/" class="btn btn-default pull-left">
+                <p>英语六级报名</p>
+                <p>Enrollment for CET-6</p>
+            </a>
+            <a href="/homepage/my_data/" class="btn btn-default pull-left">
+                <p>我的信息</p>
+                <p>My information</p>
+            </a>
+            <a href="/homepage/query_results/" class="btn btn-default pull-left">
+                <p>报考信息查询</p>
+                <p>Entrance Examination Information Query</p>
+            </a>
+            -->
+        </div>
+    {% else %}
+    <h1>你尚未登录，只能访问公开内容！</h1>
+    {% endif %}
+{% endblock %}
